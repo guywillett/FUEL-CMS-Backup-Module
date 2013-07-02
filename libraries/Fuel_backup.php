@@ -78,7 +78,7 @@ class Fuel_backup extends Fuel_advanced_module {
 		$this->initialize($params);
 	}
 	
-	// --------------------------------------------------------------------
+	// -------------------------------------------------------------------
 	
 	/**
 	 * Initialize the backup object
