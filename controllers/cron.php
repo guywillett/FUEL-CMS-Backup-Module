@@ -22,6 +22,8 @@
  * @package		FUEL CMS
  * @subpackage	Controller
  * @category	Controller
+ * @author      David Reynolds @ Daylight Studio
+ * @link       http://www.getfuelcms.com/user_guide/modules/backup
  */
 
 // --------------------------------------------------------------------
