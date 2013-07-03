@@ -30,41 +30,41 @@
 
 class Cron extends CI_Controller  {
 
-function __construct()
-{
-    parent::__construct();
-    $this->load->module_library(FUEL_FOLDER, 'fuel');
-}
-
-function _remap($method)
-{
-    // check for CRON OR STDIN constants
-    if (php_sapi_name() == 'cli' OR defined('STDIN') OR defined('CRON'))//test for CRON constant to be compatable with the cronjobs cron controller
+    function __construct()
     {
-        $this->fuel->backup->set_params($this->fuel->backup->config());//set parameters with up to date config/settings...before updating assets flag and download flag....
-        // set assets flag
-        $include_assets = ($method == '1' OR ($method =='index' AND $this->fuel->backup->config('include_assets')));
+        parent::__construct();
+        $this->load->module_library(FUEL_FOLDER, 'fuel');
+    }
 
-        if (!empty($include_assets))
+    function _remap($method)
+    {
+        // check for CRON OR STDIN constants
+        if (php_sapi_name() == 'cli' OR defined('STDIN') OR defined('CRON'))//test for CRON constant to be compatable with the cronjobs cron controller
         {
-            $this->fuel->backup->include_assets = TRUE;
-        }
-        //$this->fuel->backup->allow_overwrite = TRUE;
-        $this->fuel->backup->download = FALSE;
+            $this->fuel->backup->set_params($this->fuel->backup->config());//set parameters with up to date config/settings...before updating assets flag and download flag....
+            // set assets flag
+            $include_assets = ($method == '1' OR ($method =='index' AND $this->fuel->backup->config('include_assets')));
 
-        // perform backup
-        if (!$this->fuel->backup->do_backup())
-        {
-            $output =   $this->fuel->backup->errors(TRUE);
-        }
-        else
-        {
-            $backup_data = $this->fuel->backup->backup_data();
-            $file_name = $backup_data['file_name'];
-            $download_path = $backup_data['full_path'];
+            if (!empty($include_assets))
+            {
+                $this->fuel->backup->include_assets = TRUE;
+            }
+            //$this->fuel->backup->allow_overwrite = TRUE;
+            $this->fuel->backup->download = FALSE;
 
-            // set initial output value
-            $output = ($include_assets) ? lang('cron_db_backup_asset', $file_name) : lang('cron_db_backup', $file_name);
+            // perform backup
+            if (!$this->fuel->backup->do_backup())
+            {
+                $output =   $this->fuel->backup->errors(TRUE);
+            }
+            else
+            {
+                $backup_data = $this->fuel->backup->backup_data();
+                $file_name = $backup_data['file_name'];
+                $download_path = $backup_data['full_path'];
+
+                // set initial output value
+                $output = ($include_assets) ? lang('cron_db_backup_asset', $file_name) : lang('cron_db_backup', $file_name);
 
 
 				if ($this->fuel->backup->config('cron_email'))
