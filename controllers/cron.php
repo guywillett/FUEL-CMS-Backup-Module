@@ -22,8 +22,8 @@
  * @package		FUEL CMS
  * @subpackage	Controller
  * @category	Controller
- * @author      David Reynolds @ Daylight Studio
- * @link       http://www.getfuelcms.com/user_guide/modules/backup
+ * @author    David Reynolds @ Daylight Studio
+ * @link     http://www.getfuelcms.com/user_guide/modules/backup
  */
 
 // --------------------------------------------------------------------
@@ -41,8 +41,7 @@ class Cron extends CI_Controller  {
         // check for CRON OR STDIN constants
         if (php_sapi_name() == 'cli' OR defined('STDIN') OR defined('CRON'))//test for CRON constant to be compatable with the cronjobs cron controller
         {
-            //set parameters with up to date config/settings...before updating assets flag and download flag....
-            $this->fuel->backup->set_params($this->fuel->backup->config());
+            $this->fuel->backup->set_params($this->fuel->backup->config());//set parameters with up to date config/settings...before updating assets flag and download flag....
             // set assets flag
             $include_assets = ($method == '1' OR ($method =='index' AND $this->fuel->backup->config('include_assets')));
 
